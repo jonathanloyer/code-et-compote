@@ -34,6 +34,7 @@ class TopicController extends AbstractController
             header('Location:/code-et-compote/topic/' . $topicId);
             exit;
         }
+        
 
         $message = trim($_POST['message']);
         $userId = $_SESSION['id'];
