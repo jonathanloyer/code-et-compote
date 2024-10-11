@@ -22,4 +22,10 @@ class AdminUserController extends AbstractController
 
         $this->render('admin/users', ['users' => $users]);
     }
+    public function showUpdateUserForm($params)
+    {
+        $id = $params['id'];
+
+        $this->render('admin/updateUserForm', ['id'=> $id]);
+    }
 }

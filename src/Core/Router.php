@@ -77,6 +77,10 @@ class Router
             $this->currentController = new AdminUserController();
             $this->currentController->showUsers();
         });
+        $this->addRoutes('/admin/users/modifier/{id}', function ($params): void {
+            $this->currentController = new AdminUserController();
+            $this->currentController->showUpdateUserForm($params);
+        });
     }
 
     /**
