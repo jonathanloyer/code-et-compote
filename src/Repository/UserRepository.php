@@ -6,19 +6,35 @@ use App\Repository\AbstractRepository;
 
 class UserRepository extends AbstractRepository
 {
-
     /**
-     * @return array
+     * @return array|false
      */
-    public function findAll(): array|bool
+    public function findAll(): array|false
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM user');
-        
+        $stmt = $this->pdo->prepare('SELECT * from user');
         $stmt->execute();
 
         return $stmt->fetchAll();
-   
     }
+
+    /**
+     * @return array|false
+     */
+    public function findById(int $id): array|false
+    {
+        $stmt = $this->pdo->prepare('SELECT * from user WHERE id=:id');
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        return $stmt->fetch();
+    }
+    public function updateUserById()
+    {
+        $stmt = $this->pdo->prepare('UPDATE user SET username where id');
+        
+        $stmt->execute();
+    }
+
     /**
      * @param string $username
      * @param string $email
@@ -60,5 +76,4 @@ class UserRepository extends AbstractRepository
 
         return $stmt->fetch();
     }
-   
 }

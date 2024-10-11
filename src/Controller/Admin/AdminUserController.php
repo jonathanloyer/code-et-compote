@@ -22,6 +22,7 @@ class AdminUserController extends AbstractController
 
         $this->render('admin/users', ['users' => $users]);
     }
+
     public function showUpdateUserForm($params)
     {
         $session = new Session();
@@ -30,16 +31,26 @@ class AdminUserController extends AbstractController
             header('Location:/code-et-compote/');
             exit;
         }
+
         $id = $params['id'];
 
-        // Vérification si la variable n'est pas un entier
         if (filter_var($id, FILTER_VALIDATE_INT) === false) {
-            // Redirection vers /code-et-compote/admin/utilisateurs si ce n'est pas un entier
-            header("Location: /code-et-compote/admin/utilisateurs");
-            exit(); // Toujours appeler exit() après une redirection pour stopper l'exécution du script
+            header('Location:/code-et-compote/admin/utilisateurs');
+            exit;
         }
 
+        $repository = new UserRepository();
+        $user = $repository->findById($id);
 
         $this->render('admin/updateUserForm', ['id' => $id, 'user' => $user]);
+    }
+    public function processUpdateUserForm()
+    {
+        $session = new Session;
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location:/admin/users/processUpdateUserForm');
+            exit;
+        }
     }
 }
