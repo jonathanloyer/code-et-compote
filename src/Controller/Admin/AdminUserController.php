@@ -48,9 +48,21 @@ class AdminUserController extends AbstractController
     {
         $session = new Session;
 
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location:/admin/users/processUpdateUserForm');
+        if ($session->isAdmin() === false) {
+            header('Location:/code-et-compote/');
             exit;
         }
+
+        $id = $_POST['id'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+
+        $Repository = new UserRepository();
+        $Repository->updateUserById($id, $username, $email);
+
+        header('Location: /admin/users');
+        exit;
+
+       
     }
 }

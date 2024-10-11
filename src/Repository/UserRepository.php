@@ -28,10 +28,17 @@ class UserRepository extends AbstractRepository
 
         return $stmt->fetch();
     }
-    public function updateUserById()
+    public function updateUserById($id, $username, $email): void
     {
-        $stmt = $this->pdo->prepare('UPDATE user SET username where id');
-        
+
+        // Connexion à la base de données (à adapter selon ton code)
+        $stmt =  $this->pdo->prepare("UPDATE users SET username = :username, email = :email WHERE id = :id");
+        // Associer les paramètres
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':id', $id);
+
+        // Exécuter la requête
         $stmt->execute();
     }
 
